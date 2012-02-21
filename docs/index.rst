@@ -11,6 +11,11 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   README
+   widgets
+   local
+   glossary
+
 
 
 Indices and tables
