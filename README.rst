@@ -1,7 +1,7 @@
-PygCUI v0.1 incomplete
+PygcUI v0.1 incomplete
 ======================
 
-PygCUI (**PygC**\ urse **UI**) is a user interface library for PygCurse.
+PygcUI (**Pygc**\ urse **UI**) is a user interface library for Pygcurse.
 
 API inspired by PyGTK. While mostly similar, GTK-style attribute access
 (getters/setters and set/get property calls) is replaced by standard Python
@@ -9,23 +9,23 @@ attribute access, or, if necessary, property access.
 
 `Documentation`_ can be found at the excellent `Read The Docs`_ website.
 
-PygCUI will never include all of PyGTK's features. Some will not work in a text
-interface, or have analogues through PygCurse's or PyGame's feature sets. For
-example, text mark-up will be extremely limited, being restricted to PygCurse's
-text-formatting; Drawing functions will not be included, as PygCurse offers
-some simple drawing capabilities, and the PyGame surfaces can be accessed and
+PygcUI will never include all of PyGTK's features. Some will not work in a text
+interface, or have analogues through Pygcurse's or Pygame's feature sets. For
+example, text mark-up will be extremely limited, being restricted to Pygcurse's
+text-formatting; Drawing functions will not be included, as Pygcurse offers
+some simple drawing capabilities, and the Pygame surfaces can be accessed and
 drawn to. Other features only seem like they won't work correctly. Patches for
 those are welcome.
 
-PygCUI requires `PyGame`_ and and `PygCurse`_.
+PygcUI requires `Pygame`_ and and `Pygcurse`_.
 
 .. _Documentation: http://pygcui.readthedocs.org/
 
 .. _Read The Docs: http://readthedocs.org/
 
-.. _PyGame: http://pygame.org
+.. _Pygame: http://pygame.org
 
-.. _PygCurse: https://github.com/asweigart/pygcurse1
+.. _Pygcurse: https://github.com/asweigart/pygcurse
 
 =======
 License

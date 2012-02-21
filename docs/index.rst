@@ -13,6 +13,7 @@ Contents:
 
    README
    widgets
+   hierarchy
    local
    glossary
 
