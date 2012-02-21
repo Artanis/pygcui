@@ -31,10 +31,28 @@ either expressed or implied, of Erik Youngren.
 
 from collections import namedtuple
 
+import local
+
 def highlighted(highlighted):
     return dict(
         fgcolor='black' if highlighted else 'white',
         bgcolor='white' if highlighted else 'black')
+
+def calculate_align_x(align, width, surface_width):
+    if align == local.ALIGN_LEFT:
+        return 0
+    elif align == local.ALIGN_RIGHT:
+        return surface_width - width
+    else: # align == local.ALIGN_CENTER:
+        return (surface_width//2) - (width//2)
+
+def calculate_align_y(align, height, surface_height):
+    if align == local.ALIGN_TOP:
+        return 0
+    elif align == local.ALIGN_BOTTOM:
+        return surface_height - 1
+    else: # align == local.ALIGN_MIDDLE:
+        return (surface_height//2) - (height//2)
 
 def pairwise(iterable):
     """s -> (s0,s1), (s1,s2), (s2, s3), ...

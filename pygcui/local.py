@@ -29,13 +29,11 @@ either expressed or implied, of Erik Youngren.
 
 """
 
-VERTICAL =     2**0
-HORIZONTAL =   2**1
-PACK_START =   2**2
-PACK_END =     2**3
-ALIGN_TOP =    2**4
-ALIGN_MIDDLE = 2**5
-ALIGN_BOTTOM = 2**6
-ALIGN_LEFT =   2**7
-ALIGN_RIGHT =  2**8
-ALIGN_CENTER = 2**9
+PACK_START =   2**0
+PACK_END =     2**1
+ALIGN_TOP =    2**2
+ALIGN_MIDDLE = 2**3
+ALIGN_BOTTOM = 2**4
+ALIGN_LEFT =   2**5
+ALIGN_RIGHT =  2**6
+ALIGN_CENTER = 2**7

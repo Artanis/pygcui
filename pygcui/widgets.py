@@ -40,7 +40,7 @@ import util
 import local
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.NOTSET,
     format='[%(levelname)s] %(message)s')
 
 def mainloop():
@@ -94,9 +94,9 @@ class Bin(Container):
     """Base class for containers with one child.
 
     """
-    def __init__(self):
+    def __init__(self, child=None):
         super().__init__()
-        self.child = None
+        self.child = child
 
     def add(self, widget):
         super().add(widget)
@@ -123,7 +123,18 @@ class Button(Bin):
     """A push button that emits a signal when activated.
 
     """
-    pass
+    def __init__(self, label=None):
+        super().__init__(label)
+        self.alignx = local.ALIGN_CENTER
+        self.aligny = local.ALIGN_MIDDLE
+        self.fgcolor = 'black'
+        self.bgcolor = 'gray'
+
+    def clicked(self):
+        raise NotImplemented
+
+    def render(self, surface):
+        super().render(surface)
 
 class ToggleButton(Button):
     """A button that retains its state.
@@ -166,39 +177,43 @@ class Frame(Bin):
     def __init__(self, label=None):
         self.label = label
         super().__init__()
+        self.fgcolor = 'black'
+        self.bgcolor = 'gray'
 
     def render(self, surface):
         surface.fill(' ', bgcolor='gray')
         
         # render children
-        child_width, child_height = surface.width-2, surface.height-2
-        
-        if child_width > 0 and child_height > 0:
-        
-            child_surface = pygcurse.PygcurseSurface(
-                surface.width-2, surface.height-2)
-        
-            super().render(child_surface)
-        
-            child_surface.paste(None, surface,
-                (1, 1, surface.right-1, surface.bottom-1))
+        if self.child is not None:
+            child_width, child_height = surface.width-2, surface.height-2
+            
+            if child_width > 0 and child_height > 0:
+            
+                child_surface = pygcurse.PygcurseSurface(
+                    surface.width-2, surface.height-2)
+            
+                super().render(child_surface)
+            
+                child_surface.paste(None, surface,
+                    (1, 1, surface.right-1, surface.bottom-1))
 
         # render label
-        lbl_width, lbl_height = self.label.size
-        
-        if lbl_width > surface.width - 2:
-            lbl_width = surface.width - 2
-        elif lbl_width+2 < surface.width:
-            lbl_width = lbl_width + 2
-        
-        if lbl_width > 0 and lbl_height > 0:
-            lbl_surface = pygcurse.PygcurseSurface(lbl_width, lbl_height)
+        if self.label is not None:
+            lbl_width, lbl_height = self.label.size
             
-            self.label.render(lbl_surface)
+            if lbl_width > surface.width - 2:
+                lbl_width = surface.width - 2
+            elif lbl_width+2 < surface.width:
+                lbl_width = lbl_width + 2
             
-            lbl_surface.paste(None, surface,
-                (surface.centerx - lbl_surface.width // 2, 0,
-                lbl_surface.width, lbl_surface.height))
+            if lbl_width > 0 and lbl_height > 0:
+                lbl_surface = pygcurse.PygcurseSurface(lbl_width, lbl_height)
+                
+                self.label.render(lbl_surface)
+                
+                lbl_surface.paste(None, surface,
+                    (surface.centerx - lbl_surface.width // 2, 0,
+                    lbl_surface.width, lbl_surface.height))
 
     def __repr__(self):
         return "<pygcui.Frame {0!r}>".format(str(self.label))
@@ -286,11 +301,10 @@ class Box(Container):
     TODO: Respect homogeneity (currently forces homogeneous).
 
     """
-    def __init__(self, orientation=local.HORIZONTAL):
+    def __init__(self, vertical=True):
         super().__init__()
         self.homogenous = True
-        self.orientation = orientation
-        self.spacing = 0
+        self.vertical = vertical
         self.children = collections.OrderedDict()
 
     def pack_start(self, child, expand=True, fill=True):
@@ -298,6 +312,13 @@ class Box(Container):
             "packing {0!r} into {1!r} (start, expand={2}, fill={3})".format(
                 child, self, expand, fill))
         
+        if not expand:
+            logging.warning("IGNORED: expand=False")
+
+        if not expand and not fill:
+            logging.warning("IGNORED: fill=False")
+        
+        # FIXME: This is WRONG. See docs.
         self.children[child] = util.Packing(
             expand, fill, local.PACK_START)
 
@@ -305,7 +326,14 @@ class Box(Container):
         logging.info(
             "packing {0!r} into {1!r} (end, expand={2}, fill={3})".format(
                 child, self, expand, fill))
+        
+        if not expand:
+            logging.warning("IGNORED: expand=False")
 
+        if not expand and not fill:
+            logging.warning("IGNORED: fill=False")
+
+        # FIXME: This is WRONG. See docs.
         self.children[child] = util.Packing(
             expand, fill, local.PACK_END)
         self.children.move_to_end(child, last=False)
@@ -314,20 +342,24 @@ class Box(Container):
         if len(self.children) < 1:
             return []
 
-        if self.orientation == local.HORIZONTAL:
-            size = width
-        else:
+        if not self.homogenous:
+            logging.warning("IGNORED: homogeneous=False")
+
+        if self.vertical:
             size = height
+        else:
+            size = width
 
         extra = size // len(self.children)
         n_extra = size % len(self.children)
 
-        logging.debug(
-            "allocating {0} of {1} to each of {2} children. {3} left.".format(
-                extra, size, len(self.children), n_extra))
+        logging.debug((
+            "distributing {0} of {1} available space to each of {2} children. "
+            "{3} left.").format(extra, size, len(self.children), n_extra))
 
         sizes = [extra for n in self.children]
 
+        logging.debug("distributing extra space to children.")
         for i, s in enumerate(sizes[:]):
             if n_extra < 1:
                 break
@@ -335,18 +367,19 @@ class Box(Container):
             sizes[i] = sizes[i] + 1
             n_extra = n_extra - 1
 
-        if self.orientation == local.HORIZONTAL:
-            sizes = tuple(zip(
-                (s-sizes[i] for i, s in enumerate(accumulate(sizes))),
-                repeat(0, len(sizes)),
-                sizes,
-                repeat(height, len(sizes))))
-        else:
+        logging.debug("calculating regions")
+        if self.vertical:
             sizes = tuple(zip(
                 repeat(0, len(sizes)),
                 (s-sizes[i] for i, s in enumerate(accumulate(sizes))),
                 repeat(width, len(sizes)),
                 sizes))
+        else:
+            sizes = tuple(zip(
+                (s-sizes[i] for i, s in enumerate(accumulate(sizes))),
+                repeat(0, len(sizes)),
+                sizes,
+                repeat(height, len(sizes))))
 
         logging.debug("final allocations {0!r}".format(sizes))
 
@@ -440,23 +473,6 @@ class Label(Widget):
     def size(self):
         return (len(self.text), 1)
 
-    def _calculate_align_x(self, width, surface_width):
-        if self.alignx == local.ALIGN_LEFT:
-            return 0
-        elif self.alignx == local.ALIGN_RIGHT:
-            return surface_width - width
-        else: # self.alignx == local.ALIGN_CENTER:
-            return (surface_width//2) - (width//2)
-
-    def _calculate_align_y(self, height, surface_height):
-        if self.aligny == local.ALIGN_TOP:
-            return 0
-        elif self.aligny == local.ALIGN_BOTTOM:
-            return surface_height - 1
-        else: # self.aligny == local.ALIGN_MIDDLE:
-            return (surface_height//2) - (height//2)
-
-
     def render(self, surface):
         """Render the label to the given surface.
 
@@ -464,8 +480,8 @@ class Label(Widget):
         super().render(surface)
         
         w, h = self.size
-        x = self._calculate_align_x(w, surface.width)
-        y = self._calculate_align_y(h, surface.height)
+        x = util.calculate_align_x(self.alignx, w, surface.width)
+        y = util.calculate_align_y(self.aligny, h, surface.height)
         logging.debug('render label {0!r} in ({1}, {2}) at ({3}, {4})'.format(self, surface.width, surface.height, x, y))
 
         surface.putchars(self.text, x=x, y=y, bgcolor=self.bgcolor, fgcolor=self.fgcolor)

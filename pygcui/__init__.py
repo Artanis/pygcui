@@ -41,7 +41,8 @@ from widgets import *
 def main():
     window = Window(caption='Demo Window')
     frame_test = Frame(Label('Frame Label'))
-    box = Box(orientation=local.VERTICAL)
+    box = Box(vertical=False)
+    box.homogenous = False
     lbl_test1 = Label('Packed Label 1')
     lbl_test1.aligny = local.ALIGN_BOTTOM
     lbl_test2 = Label('Packed Label 2')
@@ -50,9 +51,9 @@ def main():
     lbl_test3.alignx = local.ALIGN_RIGHT
     lbl_test3.aligny = local.ALIGN_TOP
 
-    box.pack_start(lbl_test1)
+    box.pack_start(lbl_test1, expand=False, fill=False)
     box.pack_start(lbl_test2)
-    box.pack_start(lbl_test3)
+    box.pack_end(lbl_test3)
     frame_test.add(box)
     window.add(frame_test)
 
