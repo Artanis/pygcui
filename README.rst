@@ -7,7 +7,7 @@ API inspired by PyGTK. While mostly similar, GTK-style attribute access
 (getters/setters and set/get property calls) is replaced by standard Python
 attribute access, or, if necessary, property access.
 
-`Documentation`_ can be found at the excellent `Read the Docs`_ website.
+`Documentation`_ can be found at the excellent `Read The Docs`_ website.
 
 PygCUI will never include all of PyGTK's features. Some will not work in a text
 interface, or have analogues through PygCurse's or PyGame's feature sets. For
@@ -21,7 +21,7 @@ PygCUI requires `PyGame`_ and and `PygCurse`_.
 
 .. _Documentation: http://pygcui.readthedocs.org/
 
-.. _ReadTheDocs: http://readthedocs.org/
+.. _Read The Docs: http://readthedocs.org/
 
 .. _PyGame: http://pygame.org
 
