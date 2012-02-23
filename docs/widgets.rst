@@ -5,7 +5,8 @@ PygcUI Widgets
 :class:`Box` widgets
 ====================
 
-A container for multiple widgets, organized into vertical or horizontal stacks.
+A container for multiple widgets, organized into a vertical or horizontal
+stack.
 
 .. class:: Box(vertical=True)
     
@@ -50,67 +51,134 @@ A container for multiple widgets, organized into vertical or horizontal stacks.
         overriding the child's packing settings.
 
 
-:class:`Button` widget
-======================
+:class:`Button` widgets
+=======================
 
 A push button that emits a signal when activated.
 
+.. image:: images/button-up.*
+
+.. image:: images/button-down.*
+
 .. class:: Button(label=None)
     
-    .. method:: Button.clicked()
+    .. method:: Button.clicked
+
+        Emits a ``clicked`` signal.
 
     .. attribute:: Button.alignx
 
+        Horizontal alignment of the label the button. Not to be confused with
+        the alignment of the text within the label.
+
     .. attribute:: Button.aligny
+
+        Vertical alignment of the label within the button. Not to be confused
+        with the alignment of the text within the label.
 
     .. attribute:: Button.fgcolor
 
+        The color of the button 
+
     .. attribute:: Button.bgcolor
 
-:class:`CheckButton` widget
-===========================
 
-A toggle button styled as a checkbox and label.
+=========== ===================================================================
+Signal      Emitted
+=========== ===================================================================
+activate    Emitted when :meth:`Widget.activate` is called. Causes a
+            ``clicked`` signal to be emitted.
+clicked     Emits when mouse button is pressed and released over the button,
+            or when :meth:`Button.clicked` is called.
+=========== ===================================================================
+
+:class:`CheckButton` widgets
+============================
+
+.. image:: images/check-button-unchecked.*
+
+.. image:: images/check-button-checked.*
+
+A :class:`ToggleButton` styled as a checkbox and label.
 
 .. class:: CheckButton
+    
+    .. method:: CheckButton.clicked
 
-:class:`CheckMenuItem` widget
-=============================
+        Emits a ``clicked`` signal.
+
+    .. attribute:: CheckButton.active
+
+        True if checkbox is checked. Changing this attribute causes the
+        ``toggled`` signal to be emitted.
+
+    .. .. attribute:: CheckButton.alignx
+
+    .. .. attribute:: CheckButton.aligny
+
+    .. attribute:: CheckButton.fgcolor
+
+    .. attribute:: CheckButton.bgcolor
+
+:class:`CheckMenuItem` widgets
+==============================
 
 A toggle-able menu item styled as a checkbox and label.
 
 .. class:: CheckMenuItem
 
-:class:`ComboBox` widget
-========================
+:class:`ComboBox` widgets
+=========================
+
+.. image:: images/combobox-menu.*
+
+.. image:: images/combobox-menu-active.*
+
+.. image:: images/combobox-list.*
 
 A widget that allows the user to choose from a list of items.
 
 .. class:: ComboBox
 
-:class:`DrawingArea` widget
-===========================
+    .. attribute:: ComboBox.active
+
+        Index of currently active item.
+
+:class:`DrawingArea` widgets
+============================
 
 A widget for custom user-interface elements.
 
-.. class:: DrawingArea
+.. class:: DrawingArea()
 
-:class:`Entry` widget
-=====================
+    .. attribute:: DrawingArea.window
+
+        A :class:`pygcurse.PygcurseSurface` to draw on.
+
+:class:`Entry` widgets
+======================
+
+.. image:: images/entry.*
 
 A single-line text entry field.
 
 .. class:: Entry
 
-:class:`Expander` widget
-========================
+:class:`Expander` widgets
+=========================
+
+.. image:: images/expander-close.*
+
+.. image:: images/expander-open.*
 
 A container that can hide it's child.
 
 .. class:: Expander
 
-:class:`Frame` widget
-=====================
+:class:`Frame` widgets
+======================
+
+.. image:: images/frame.*
 
 A frame displays a single child widget within a border, optionally with a
 label at the top.
@@ -122,7 +190,7 @@ between them.
 
     .. attribute:: Frame.label
 
-        A :class:`Label` widget. This label will be allocated 1 row, and any
+        A :class:`Label` widgets. This label will be allocated 1 row, and any
         space required up to the corners of the frame.
 
         The label will render using it's own colors.
@@ -156,7 +224,7 @@ between them.
 
     .. attribute:: Frame.align
 
-        The alignment of the :attr:`Frame.label` widget. Not to be confused
+        The alignment of the :attr:`Frame.label` widgets. Not to be confused
         with the alignment of the text within the label.
 
         :attr:`local.ALIGN_LEFT`
@@ -170,8 +238,8 @@ between them.
             The label is positioned near the right top corner of the Frame. 
 
 
-:class:`Label` widget
-=====================
+:class:`Label` widgets
+======================
 
 Displays read-only text.
 
@@ -223,74 +291,92 @@ Displays read-only text.
         A tuple ``(width, height)`` of the minimum size the label requires to
         fully display the label text in a single line.
 
-:class:`Menu` widget
-====================
+:class:`Menu` widgets
+=====================
 
 A drop-down menu.
 
 .. class:: Menu
 
-:class:`MenuBar` widget
-=======================
+:class:`MenuBar` widgets
+========================
 
 A widget that displays menu items horizontally.
 
 .. class:: MenuBar
 
-:class:`MenuItem` widget
-========================
+:class:`MenuItem` widgets
+=========================
 
 A widget for use in menus.
 
 .. class:: MenuItem
 
-:class:`RadioButton` widget
-===========================
+:class:`RadioButton` widgets
+============================
 
 A toggle button that is mutually exclusive with other radio buttons in it's
 group.
 
+.. image:: images/radio-button-unchecked.*
+
+.. image:: images/radio-button-checked.*
+
 .. class:: RadioButton
 
-:class:`RadioMenuItem` widget
-=============================
+    .. method:: RadioButton.clicked
+
+    .. attribute:: RadioButton.active
+
+    .. attribute:: RadioButton.alignx
+
+    .. attribute:: RadioButton.aligny
+
+    .. attribute:: RadioButton.fgcolor
+
+    .. attribute:: RadioButton.bgcolor
+
+:class:`RadioMenuItem` widgets
+==============================
 
 A check menu item that is mutually exclusive with other radio menu items in
 it's group.
 
 .. class:: RadioMenuItem
 
-:class:`Range` widget
-=====================
+:class:`Range` widgets
+======================
 
 A widget for choosing from a number range.
 
+.. image:: images/range.*
+
 .. class:: Range
 
-:class:`ScrolledWindow` widget
-==============================
+:class:`ScrolledWindow` widgets
+===============================
 
 Adds scrollbars to the child widget. Useful with a :class:`Viewport` to add
 scrolling to larger widgets.
 
 .. class:: ScrolledWindow
 
-:class:`SeparatorMenuItem` widget
-=================================
+:class:`SeparatorMenuItem` widgets
+==================================
 
 Draws a horizontal line in a menu.
 
 .. class:: SeparatorMenuItem
 
-:class:`Table` widget
-=====================
+:class:`Table` widgets
+======================
 
 Arrange child widgets in a grid.
 
 .. class:: Table
 
-:class:`TextBuffer`
-===================
+:class:`TextBuffer` objects
+===========================
 
 A TextBuffer is not a widget, but storage for text another widget displays.
 Allows some minor text formatting, which the displaying widget may or may not
@@ -298,30 +384,42 @@ honor.
 
 .. class:: TextBuffer
 
-:class:`TextView` widget
-========================
+:class:`TextView` widgets
+=========================
 
 Render text from a :class:`TextBuffer`.
 
 .. class:: TextView
 
-:class:`ToggleButton` widget
-============================
+:class:`ToggleButton` widgets
+=============================
 
 A button that retains it's state.
 
 .. class:: ToggleButton
+    
+    .. method:: ToggleButton.clicked
 
-:class:`Viewport` widget
-========================
+    .. attribute:: ToggleButton.active
+
+    .. attribute:: ToggleButton.alignx
+
+    .. attribute:: ToggleButton.aligny
+
+    .. attribute:: ToggleButton.fgcolor
+
+    .. attribute:: ToggleButton.bgcolor
+
+:class:`Viewport` widgets
+=========================
 
 A widget that renders it's child within any space it needs, but only displays
 a portion of it.
 
 .. class:: Viewport
 
-:class:`Window` widget
-======================
+:class:`Window` widgets
+=======================
 
 Windows are top-level widgets, creating a :class:`pygcurse.PygcurseWindow`
 instance and allocating space from that window to its children.

@@ -13,8 +13,8 @@ Contents:
 
    README
    widgets
-   hierarchy
    local
+   hierarchy
    glossary
 
 
