@@ -14,7 +14,7 @@ Contents:
    README
    mainloop
    widgets
-   box_model
+   layout
    signals
    local
    hierarchy

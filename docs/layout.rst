@@ -1,6 +1,6 @@
-=========
-Box Model
-=========
+======
+Layout
+======
 
 Like GTK+ 2 and 3, PygcUI builds layouts by placing widgets in other widgets,
 allowing those parent widgets to control how screen space is allocated to the
