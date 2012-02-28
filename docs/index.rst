@@ -12,7 +12,10 @@ Contents:
    :maxdepth: 2
 
    README
+   mainloop
    widgets
+   box_model
+   signals
    local
    hierarchy
    glossary
