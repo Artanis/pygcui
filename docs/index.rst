@@ -13,7 +13,7 @@ Contents:
 
    README
    mainloop
-   widgets
+   widgets/index
    layout
    signals
    local
