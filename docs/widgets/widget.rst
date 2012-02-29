@@ -1,13 +1,19 @@
-===============
-:class:`Widget`
-===============
+=======================
+:class:`Widget` objects
+=======================
 
 
 .. class:: Widget
 
+    Base class for all widgets.
+
 
 Methods
 =======
+
+.. method:: Widget.activate()
+    
+    Emits the ``activate`` signal. 
 
 .. method:: Widget.size_request()
 
@@ -15,6 +21,14 @@ Methods
 
 Attributes
 ==========
+
+.. attribute:: Widget.in_focus
+    
+    The widget has the global input focus.
+
+.. attribute:: Widget.focusable
+
+    The widget can receive the global input focus.
 
 .. attribute:: Widget.fgcolor
 
@@ -29,18 +43,20 @@ Attributes
 Signals
 =======
 
-============== ================================================================
-Signal Name    Description
-============== ================================================================
-button-press   Mouse button is pressed.
-button-release Mouse button is released.
-mouse-enter    Mouse pointer enters widget.
-mouse-leave    Mouse pointer leaves widget.
-focus-in       Widget receives focus.
-focus-out      Widget loses focus. 
-key-release    Key on keyboard is released.
-key-press      Key on keyboard is pressed.
-show           Widget requests to be displayed.
-hide           Widget becomes hidden.
-delete         Widget requests to be deleted.
-============== ================================================================
+=============== ===============================================================
+Signal Name     Description
+=============== ===============================================================
+activate        Enter is pressed while widget has focus; button is clicked;
+                etc.
+button-press    Mouse button is pressed.
+button-release  Mouse button is released.
+mouse-enter     Mouse pointer enters widget.
+mouse-leave     Mouse pointer leaves widget.
+focus-in        Widget receives focus.
+focus-out       Widget loses focus. 
+key-release     Key on keyboard is released.
+key-press       Key on keyboard is pressed.
+show            Widget requests to be displayed.
+hide            Widget becomes hidden.
+delete          Widget requests to be deleted.
+=============== ===============================================================
