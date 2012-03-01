@@ -12,14 +12,13 @@ Class Hierarchy
             * :class:`ComboBox`
             * :class:`Expander`
             * :class:`Frame`
-            * :class:`Item`
-                * :class:`MenuItem`
-                    * :class:`CheckMenuItem`
-                        * :class:`RadioMenuItem`
-                    * :class:`SeparatorMenuItem`
-                * :class:`ScrolledWindow`
-                * :class:`Viewport`
-                * :class:`Window`
+            * :class:`MenuItem`
+                * :class:`CheckMenuItem`
+                    * :class:`RadioMenuItem`
+                * :class:`SeparatorMenuItem`
+            * :class:`ScrolledWindow`
+            * :class:`Viewport`
+            * :class:`Window`
         * :class:`Box`
             * :class:`MenuShell`
                 * :class:`Menu`
