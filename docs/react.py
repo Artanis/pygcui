@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+# From https://github.com/copton/react
+# If anyone has a better way to use this file, please let me know. Maybe in the
+# virtualenv's site-packages? it's not pip installable... Perhaps a fork and
+# make one for it.
+
 import os
 import os.path
 from pyinotify import WatchManager, IN_DELETE, IN_CREATE, IN_CLOSE_WRITE, ProcessEvent, Notifier
